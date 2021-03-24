@@ -1,0 +1,18 @@
+import express from 'express';
+import {create} from '../controllers/category';
+
+const router = express.Router();
+
+router.post('/categories', create);
+
+// router.get('/categories', list);
+
+// router.get('/category/:categoryId', read);
+
+// router.put('/category/:categoryId', update);
+
+// router.delete('/category/:categoryId', remove);
+
+// router.param('categoryId', categoryById);
+
+module.exports = router;

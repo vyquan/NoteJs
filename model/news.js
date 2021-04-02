@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const {ObjectId} = mongoose.Schema;
 
-const productSchema =mongoose.Schema({
+const newsSchema =mongoose.Schema({
     name: {
         type: String,
         trim:true,
@@ -39,4 +39,4 @@ const productSchema =mongoose.Schema({
     
 
 },{timeStamps:true});
-module.exports =mongoose.model("Product",productSchema)
+module.exports =mongoose.model("News",newsSchema)

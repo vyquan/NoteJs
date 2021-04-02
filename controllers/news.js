@@ -1,9 +1,9 @@
-import Product from '../model/product';
+import News from '../model/news';
 import formidable from 'formidable';
 import fs from 'fs';
 import _ from 'lodash';
 
-//Add Product
+//Add news
 export const create = (req,res) =>{
     //khởi tạo formidable
     let form = new formidable.IncomingForm();
@@ -21,7 +21,7 @@ export const create = (req,res) =>{
                 error: "Bạn cần nhập đầy đủ thông tin"
             })
         }
-        let product = new Product(fields);
+        let news = new News(fields);
         if(files.photo){
             if(files.photo.size > 1000000){
                 return res.status(400).json({
@@ -29,12 +29,12 @@ export const create = (req,res) =>{
                 })                
             }
             //thành công gán giá trị vào model
-            product.photo.data = fs.readFileSync(files.photo.path); //đọc file ảnh và gán vào path
-            product.photo.contentType = files.photo.path;
+            news.photo.data = fs.readFileSync(files.photo.path); //đọc file ảnh và gán vào path
+            news.photo.contentType = files.photo.path;
         }
-        // console.log(product);
+        // console.log(news);
         //thêm vào db
-        product.save((err, data) => {
+        news.save((err, data) => {
             if(err){
                 return res.status(400).json({
                     error:"Không thêm được sản phẩm"
@@ -44,15 +44,15 @@ export const create = (req,res) =>{
         })
     });
 }
-//List Products
+//List newss
 export const list = (req, res)=>{
-    // Product.find((err, data) =>{
+    // news.find((err, data) =>{
     //     if(err){
     //         error:"Không tìm thấy sản phẩm"
     //     }
     //     res.json({data})
     // })
-    Product.find()
+    News.find()
     .select("-photo")
     // .populate('category')
     // .sort([[order, sortBy]])
@@ -60,44 +60,44 @@ export const list = (req, res)=>{
     .exec((err,data) =>{
         if(err){
             res.status(400).json({
-                error: "Product not found"
+                error: "news not found"
             })
         }
         res.json(data)
     })
 }
-//Product Detail
-export const productById = (req, res, next, id) => {
+//news Detail
+export const newsById = (req, res, next, id) => {
     //nhận id
-    Product.findById(id).exec((err, product) => {
-        if(err || !product) {
+    News.findById(id).exec((err, news) => {
+        if(err || !news) {
         res.status(400).json({
                 error: "Không tìm thấy sản phẩm"
             })
         }
-        req.product = product;
+        req.news = news;
         next();
     })
 }
 export const read = (req, res) =>{
-    return res.json(req.product);
+    return res.json(req.news);
 }
-//Delete Product
+//Delete news
 export const remove = (req, res) =>{
-    let product = req.product;
-    product.remove((err, deleteProduct) => {
+    let news = req.news;
+    news.remove((err, deletenews) => {
         if(err){
             return res.status(400).json({
                 error: "Không xóa được sản phẩm"
             })
         }
         res.json({
-            deleteProduct,
+            deletenews,
             message:"Sản phẩm đã được xóa thành công"
         })
     })
 }
-//Update Product
+//Update news
 export const update = (req, res) =>{
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
@@ -113,20 +113,20 @@ export const update = (req, res) =>{
                 error: "Bạn cần nhập đầy đủ thông tin"
             })
         }
-        // let product = new Product(fields);
-        let product = req.product;
-        product = _.assignIn(product, fields);
+        // let news = new news(fields);
+        let news = req.news;
+        news = _.assignIn(news, fields);
         if(files.photo){
             if(files.photo.size > 1000000){
                 return res.status(400).json({
                     error:"Kích thước ảnh không vượt quá 1MB"
                 })                
             }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.path;
+            news.photo.data = fs.readFileSync(files.photo.path);
+            news.photo.contentType = files.photo.path;
         }
-        // console.log(product);
-        product.save((err, data) => {
+        // console.log(news);
+        news.save((err, data) => {
             if(err){
                 return res.status(400).json({
                     error:"Không sửa được sản phẩm"

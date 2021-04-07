@@ -51,7 +51,6 @@ export const remove = (req, res) =>{
         })
     })
 }
-
 //Update Category
 export const update = (req, res) => {
     const category = req.category;

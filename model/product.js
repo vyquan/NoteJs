@@ -38,5 +38,5 @@ const productSchema =mongoose.Schema({
     }
     
 
-},{timeStamps:true});
+},{timestamps:true});
 module.exports =mongoose.model("Product",productSchema)

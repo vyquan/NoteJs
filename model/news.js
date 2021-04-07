@@ -38,5 +38,5 @@ const newsSchema =mongoose.Schema({
     }
     
 
-},{timeStamps:true});
+},{timestamps:true});
 module.exports =mongoose.model("News",newsSchema)

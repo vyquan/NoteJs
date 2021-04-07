@@ -7,5 +7,5 @@ const categorySchema =mongoose.Schema({
         maxLength:32,
         required: true
     },
-},{timeStamps:true});
+},{timestamps:true});
 module.exports =mongoose.model("Category",categorySchema)
